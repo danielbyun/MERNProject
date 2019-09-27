@@ -232,6 +232,71 @@ router.put(
   }
 );
 
+// @route   GET api/profile/experience/:exp_id
+// @desc    Get experience from profile with an Id
+// @access  Private
+router.get("/experience/:exp_id"),
+  auth,
+  async (req, res) => {
+    try {
+      const profile = await Profile.findOne({
+        // coming from the URL above
+        experience: req.params.exp_id
+      }).populate("experience", ["company", "id"]);
+      console.log("profile:", profile);
+      console.log(req.params.exp_id);
+    } catch (err) {
+      console.err(err);
+      res.status(500).send("Server error");
+    }
+  };
+
+// @route   PATCH api/profile/experience/:exp_id
+// @desc    Edit experience from profile
+// @access  Private
+router.patch("/experience/:exp_id", auth, async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).send({ err: errors.array() });
+    }
+    // data that's coming in
+    const {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    } = req.body;
+
+    // create new object
+    const newExp = {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    };
+
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // get edit index
+    const editIndex = profile.experience
+      .map(item => item.id)
+      .indexOf(req.params.exp_id);
+
+    console.log(profile, editIndex);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 // @route   DELETE api/profile/experience/:exp_id
 // @desc    delete experience from profile
 // @access  Private

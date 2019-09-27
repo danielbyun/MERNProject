@@ -135,7 +135,7 @@ router.put("/like/:id", auth, async (req, res) => {
 });
 
 // @route   PUT api/posts/like/:id
-// @desc    Like a post by Id
+// @desc    Unlike a post by Id
 // @access  Private
 router.put("/unlike/:id", auth, async (req, res) => {
   try {
