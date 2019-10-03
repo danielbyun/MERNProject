@@ -1,9 +1,10 @@
 import {
   GET_PROFILE,
-  PROFILE_ERROR,
+  GET_PROFILES,
+  GET_REPOS,
   CLEAR_PROFILE,
   UPDATE_PROFILE,
-  GET_PROFILES
+  PROFILE_ERROR
 } from "../actions/types";
 
 const initialState = {
