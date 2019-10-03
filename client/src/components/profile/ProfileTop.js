@@ -14,7 +14,7 @@ const ProfileTop = ({
 }) => {
   return (
     <div className="profile-top bg-primary p-2">
-      <img className="round-img my-1" src={avatar} alt />
+      <img className="round-img my-1" src={avatar} alt="avatar" />
       <h1 className="large">{name}</h1>
       <p className="lead">
         {status} {company && <span> at {company}</span>}
@@ -74,8 +74,7 @@ const ProfileTop = ({
 };
 
 ProfileTop.propTypes = {
-  profile: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired
 };
 
 export default ProfileTop;

@@ -29,12 +29,12 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
+      <h1 className="large text-primary">Sign In</h1>
+      <p className="lead">
+        <i className="fas fa-user" /> Sign into Your Account
+      </p>
       <form className="form" onSubmit={e => onSubmit(e)}>
         {/* <div className="alert alert-danger">Invalid credentials</div> */}
-        <h1 className="large text-primary">Sign In</h1>
-        <p className="lead">
-          <i className="fas fa-user" /> Sign into Your Account
-        </p>
         <div className="form-group">
           <input
             type="email"
@@ -66,7 +66,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
