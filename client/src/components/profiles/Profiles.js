@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getProfiles } from "../../actions/profile";
@@ -10,7 +10,7 @@ const Profiles = ({ profile: { profiles, loading }, getProfiles }) => {
   // running get profile as soon as it loads (empty brackets to run only once)
   useEffect(() => {
     getProfiles();
-  }, []);
+  }, [getProfiles]);
 
   return (
     <Fragment>
