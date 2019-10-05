@@ -28,7 +28,7 @@ if (localStorage.token) {
 const App = () => {
   // this keeps running and is a constant loop unless we have the empty bracket at the end
   useEffect(() => {
-    store.dispatch(loadUser);
+    store.dispatch(loadUser());
   }, []);
 
   return (

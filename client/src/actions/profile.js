@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setAlert } from "./alert";
+
 import {
   GET_PROFILE,
   GET_PROFILES,
@@ -58,7 +59,7 @@ export const getProfiles = () => async dispatch => {
 // get single profile by id
 export const getProfileById = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/profile/${userId}`);
+    const res = await axios.get(`/api/profile/user/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
