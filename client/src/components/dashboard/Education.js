@@ -13,31 +13,36 @@ const Education = ({ education, deleteEducation }) => {
     setEducationToggle(!educationToggle);
   };
 
-  const educations = education.map(edu => (
-    <tr key={edu._id}>
-      <td>{edu.school}</td>
-      <td className="hide-sm">{edu.degree}</td>
-      <td>
-        <Moment format="MM/DD/YYYY">{edu.from}</Moment> -{" "}
-        {edu.to === null ? (
-          " Now"
-        ) : (
-          <Moment format="MM/DD/YYYY">{edu.to}</Moment>
-        )}
-      </td>
-      <td>
-        <Link to={`/edit-education/${edu._id}`} className="btn btn-secondary">
-          Edit
-        </Link>
-        <button
-          onClick={() => deleteEducation(edu._id)}
-          className="btn btn-danger"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ));
+  const educations = education
+    .sort(function(a, b) {
+      return +new Date(a.from) - +new Date(b.from);
+    })
+    .reverse()
+    .map(edu => (
+      <tr key={edu._id}>
+        <td>{edu.school}</td>
+        <td className="hide-sm">{edu.degree}</td>
+        <td>
+          <Moment format="MM/DD/YYYY">{edu.from}</Moment> -{" "}
+          {edu.to === null ? (
+            " Now"
+          ) : (
+            <Moment format="MM/DD/YYYY">{edu.to}</Moment>
+          )}
+        </td>
+        <td>
+          <Link to={`/edit-education/${edu._id}`} className="btn btn-secondary">
+            Edit
+          </Link>
+          <button
+            onClick={() => deleteEducation(edu._id)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
   return (
     <Fragment>
       <h2 className="my-2">Education Credentials</h2>

@@ -42,12 +42,14 @@ const Profile = ({
               <h2 className="text-primary">Experience</h2>
               {profile.experience.length > 0 ? (
                 <Fragment>
-                  {profile.experience.map(exp => (
-                    <ProfileExperience
-                      key={exp._id}
-                      experience={exp}
-                    ></ProfileExperience>
-                  ))}
+                  {profile.experience
+                    .sort(function(a, b) {
+                      return +new Date(a.from) - +new Date(b.from);
+                    })
+                    .reverse()
+                    .map(exp => (
+                      <ProfileExperience key={exp._id} experience={exp} />
+                    ))}
                 </Fragment>
               ) : (
                 <h4>No Experience Credentials</h4>
@@ -57,12 +59,14 @@ const Profile = ({
               <h2 className="text-primary">Education</h2>
               {profile.education.length > 0 ? (
                 <Fragment>
-                  {profile.education.map(edu => (
-                    <ProfileEducation
-                      key={edu._id}
-                      education={edu}
-                    ></ProfileEducation>
-                  ))}
+                  {profile.education
+                    .sort(function(a, b) {
+                      return +new Date(a.from) - +new Date(b.from);
+                    })
+                    .reverse()
+                    .map(edu => (
+                      <ProfileEducation key={edu._id} education={edu} />
+                    ))}
                 </Fragment>
               ) : (
                 <h4>No Education Credentials</h4>

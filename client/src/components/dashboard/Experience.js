@@ -13,31 +13,39 @@ const Experience = ({ experience, deleteExperience }) => {
     deleteExperience(id);
   };
 
-  const experiences = experience.map(exp => (
-    <tr key={exp._id}>
-      <td>{exp.company}</td>
-      <td className="hide-sm">{exp.title}</td>
-      <td>
-        <Moment format="MM/DD/YYYY">{exp.from}</Moment> -{" "}
-        {exp.to === null ? (
-          " Now"
-        ) : (
-          <Moment format="MM/DD/YYYY">{exp.to}</Moment>
-        )}
-      </td>
-      <td>
-        <Link to={`/edit-experience/${exp._id}`} className="btn btn-secondary">
-          Edit
-        </Link>
-        <button
-          onClick={() => deleteExperience(exp._id)}
-          className="btn btn-danger"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ));
+  const experiences = experience
+    .sort(function(a, b) {
+      return +new Date(a.from) - +new Date(b.from);
+    })
+    .reverse()
+    .map(exp => (
+      <tr key={exp._id}>
+        <td>{exp.company}</td>
+        <td className="hide-sm">{exp.title}</td>
+        <td>
+          <Moment format="MM/DD/YYYY">{exp.from}</Moment> -{" "}
+          {exp.to === null ? (
+            " Now"
+          ) : (
+            <Moment format="MM/DD/YYYY">{exp.to}</Moment>
+          )}
+        </td>
+        <td>
+          <Link
+            to={`/edit-experience/${exp._id}`}
+            className="btn btn-secondary"
+          >
+            Edit
+          </Link>
+          <button
+            onClick={() => deleteExperience(exp._id)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
   return (
     <Fragment>
       <h2 className="my-2">Experience Credentials</h2>

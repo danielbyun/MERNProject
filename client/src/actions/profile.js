@@ -267,7 +267,6 @@ export const editExperience = (expData, id, history) => async dispatch => {
       }
     };
 
-    console.log(`/api/profile/experience/${id}`, expData, config);
     const res = await axios.post(
       `/api/profile/experience/${id}`,
       expData,
