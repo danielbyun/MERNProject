@@ -4,7 +4,10 @@ import {
   GET_REPOS,
   CLEAR_PROFILE,
   UPDATE_PROFILE,
-  PROFILE_ERROR
+  PROFILE_ERROR,
+  GET_EXPERIENCE,
+  UPDATE_EXPERIENCE,
+  GET_EDUCATION
 } from "../actions/types";
 
 const initialState = {
@@ -24,6 +27,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: payload,
+        loading: false
+      };
+    case GET_EXPERIENCE:
+    case GET_EDUCATION:
+    case UPDATE_EXPERIENCE:
+      return {
+        ...state,
+        data: payload,
         loading: false
       };
     case GET_PROFILES:

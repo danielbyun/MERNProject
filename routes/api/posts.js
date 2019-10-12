@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator/check");
+const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 const Profile = require("../../models/Profile");
@@ -208,6 +208,10 @@ router.post(
     }
   }
 );
+
+// @route   PATCH api/posts/comment/:id
+// @desc    Edit on a post
+// @access  Private
 
 // @route   DELETE api/posts/comment/:id/:comment_id
 // @desc    DELETE a comment of a post

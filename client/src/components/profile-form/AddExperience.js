@@ -9,7 +9,7 @@ const AddExperience = ({ addExperience, history }) => {
     company: "",
     title: "",
     location: "",
-    form: "",
+    from: "",
     to: "",
     current: false,
     description: ""

@@ -1,23 +1,34 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { deleteEducation } from "../../actions/profile";
+import EditEducation from "./EditEducation";
 
 const Education = ({ education, deleteEducation }) => {
+  const [educationToggle, setEducationToggle] = useState(false);
+
+  const handleClick = event => {
+    setEducationToggle(!educationToggle);
+  };
+
   const educations = education.map(edu => (
     <tr key={edu._id}>
       <td>{edu.school}</td>
       <td className="hide-sm">{edu.degree}</td>
       <td>
-        <Moment format="YYYY/MM/DD">{edu.from}</Moment> -{" "}
+        <Moment format="MM/DD/YYYY">{edu.from}</Moment> -{" "}
         {edu.to === null ? (
           " Now"
         ) : (
-          <Moment format="YYYY/MM/DD">{edu.to}</Moment>
+          <Moment format="MM/DD/YYYY">{edu.to}</Moment>
         )}
       </td>
       <td>
+        <Link to={`/edit-education/${edu._id}`} className="btn btn-secondary">
+          Edit
+        </Link>
         <button
           onClick={() => deleteEducation(edu._id)}
           className="btn btn-danger"
@@ -41,6 +52,11 @@ const Education = ({ education, deleteEducation }) => {
         </thead>
         <tbody>{educations}</tbody>
       </table>
+      {educationToggle && (
+        <Fragment>
+          <EditEducation />
+        </Fragment>
+      )}
     </Fragment>
   );
 };

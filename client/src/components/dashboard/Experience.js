@@ -1,23 +1,34 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { connect } from "react-redux";
-import { deleteExperience } from "../../actions/profile";
+import { Link } from "react-router-dom";
+import { deleteExperience, editExperience } from "../../actions/profile";
+import EditExperience from "./EditExperience";
 
 const Experience = ({ experience, deleteExperience }) => {
+  const [experienceToggle, setExperienceToggle] = useState(false);
+
+  const onDeleteClick = id => {
+    deleteExperience(id);
+  };
+
   const experiences = experience.map(exp => (
     <tr key={exp._id}>
       <td>{exp.company}</td>
       <td className="hide-sm">{exp.title}</td>
       <td>
-        <Moment format="YYYY/MM/DD">{exp.from}</Moment> -{" "}
+        <Moment format="MM/DD/YYYY">{exp.from}</Moment> -{" "}
         {exp.to === null ? (
           " Now"
         ) : (
-          <Moment format="YYYY/MM/DD">{exp.to}</Moment>
+          <Moment format="MM/DD/YYYY">{exp.to}</Moment>
         )}
       </td>
       <td>
+        <Link to={`/edit-experience/${exp._id}`} className="btn btn-secondary">
+          Edit
+        </Link>
         <button
           onClick={() => deleteExperience(exp._id)}
           className="btn btn-danger"

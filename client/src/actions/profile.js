@@ -8,7 +8,10 @@ import {
   UPDATE_PROFILE,
   PROFILE_ERROR,
   CLEAR_PROFILE,
-  ACCOUNT_DELETED
+  ACCOUNT_DELETED,
+  GET_EXPERIENCE,
+  GET_EDUCATION,
+  UPDATE_EXPERIENCE
 } from "./types";
 
 // Get current users profile
@@ -176,6 +179,26 @@ export const addExperience = (formData, history) => async dispatch => {
   }
 };
 
+// get single experience by id
+export const getExperienceById = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/profile/experience/${id}`);
+
+    dispatch({
+      type: GET_EXPERIENCE,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status
+      }
+    });
+  }
+};
+
 // Add Education
 export const addEducation = (formData, history) => async dispatch => {
   try {
@@ -208,6 +231,105 @@ export const addEducation = (formData, history) => async dispatch => {
       payload: {
         msg: err.response.statusText,
         status: err.response.status
+      }
+    });
+  }
+};
+
+// get single experience by id
+export const getEducationById = (userId, educationId) => async dispatch => {
+  try {
+    const res = await axios.get(
+      `/api/profile/user/${userId}/education/${educationId}`
+    );
+    console.log(res);
+    dispatch({
+      type: GET_EDUCATION,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status
+      }
+    });
+  }
+};
+
+// Edit Experience
+export const editExperience = (expData, id, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    console.log(`/api/profile/experience/${id}`, expData, config);
+    const res = await axios.post(
+      `/api/profile/experience/${id}`,
+      expData,
+      config
+    );
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+    dispatch(setAlert("Experience successfully edited", "success"));
+
+    history.push("/dashboard");
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    });
+  }
+};
+
+// Edit Education
+export const editEducation = (eduData, id, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const res = await axios.post(
+      `/api/profile/education/${id}`,
+      eduData,
+      config
+    );
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+    dispatch(setAlert("Education successfully edited", "success"));
+
+    history.push("/dashboard");
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
       }
     });
   }

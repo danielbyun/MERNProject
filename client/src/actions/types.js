@@ -26,6 +26,12 @@ export const PROFILE_ERROR = "PROFILE_ERROR";
 export const CLEAR_PROFILE = "CLEAR_PROFILE";
 // update profile
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const GET_EXPERIENCE = "GET_EXPERIENCE";
+export const GET_EDUCATION = "GET_EDUCATION";
+// update experience in profile
+export const UPDATE_EXPERIENCE = "UPDATE_EXPERIENCE";
+// update education in profile
+export const UPDATE_EDUCATION = "UPDATE_EDUCATION";
 // Delete Account
 export const ACCOUNT_DELETED = "ACCOUNT_DELETED";
 

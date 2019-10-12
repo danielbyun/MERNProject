@@ -233,6 +233,81 @@ router.put(
   }
 );
 
+// @route GET api/profile/user/:user_id/experiences
+// @desc Get profile experiences
+// @access Private
+router.get("/user/:user_id/experiences", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      // coming from the URL above
+      user: req.params.user_id
+    }).populate("user", ["name", "avatar"]);
+
+    if (!profile) return res.status(400).json({ msg: `Profile not found.` });
+
+    res.json(profile.experience);
+  } catch (err) {
+    res.status(500).send("Server Error");
+    // res.status(500).send("Server Error");
+  }
+});
+
+// @route   GET api/profile/user/experience/:exp_id
+// @desc    Get profile experience
+// @access  Private
+router.get("/user/:user_id/experience/:exp_id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      // coming from the URL above
+      user: req.params.user_id
+    }).populate("user", ["name", "avatar"]);
+
+    if (!profile) return res.status(400).json({ msg: `Profile not found.` });
+
+    for (let i = 0; i < profile.experience.length; i++) {
+      if (profile.experience[i]._id === req.params.exp_id) {
+        res.json(profile.experience[i]._id);
+      }
+    }
+
+    // res.json(`${req.params.exp_id} + ${profile.experience[0]._id}`);
+  } catch (err) {
+    res.status(500).send("Server Error");
+    // res.status(500).send("Server Error");
+  }
+});
+
+// @route   POST api/profile/experience/:exp_id
+// @desc    Edit profile experience
+// @access  Private
+router.post("/experience/:exp_id", auth, async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).send({ err: errors.array() });
+  }
+
+  Profile.findOne({ user: req.user.id })
+    .then(profile => {
+      const experienceIndex = profile.experience
+        .map(item => item.id)
+        .indexOf(req.params.exp_id);
+
+      let experienceToUpdate = profile.experience[experienceIndex];
+
+      (experienceToUpdate.title = req.body.title),
+        (experienceToUpdate.company = req.body.company),
+        (experienceToUpdate.location = req.body.location),
+        (experienceToUpdate.from = req.body.from),
+        (experienceToUpdate.to = req.body.to),
+        (experienceToUpdate.current = req.body.current),
+        (experienceToUpdate.description = req.body.description);
+
+      profile.save().then(profile => res.json(profile));
+    })
+    .catch(err => res.status(404).json(err));
+});
+
 // @route   GET api/profile/experience/:exp_id
 // @desc    Get experience from profile with an Id
 // @access  Private
@@ -387,6 +462,75 @@ router.put(
     }
   }
 );
+
+// @route GET api/profile/user/:user_id/educations
+// @desc Get profile educations
+// @access Private
+router.get("/user/:user_id/educations", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      // coming from the URL above
+      user: req.params.user_id
+    }).populate("user", ["name", "avatar"]);
+
+    if (!profile) return res.status(400).json({ msg: `Profile not found.` });
+
+    res.json(profile.education);
+  } catch (err) {
+    res.status(500).send("Server Error");
+    // res.status(500).send("Server Error");
+  }
+});
+
+// @route   GET api/profile/user/:user_id/education/:edu_id
+// @desc    Get profile education
+// @access  Private
+router.get("/user/:user_id/education/:edu_id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      // coming from the URL above
+      user: req.params.user_id
+    }).populate("user", ["name", "avatar"]);
+
+    if (!profile) return res.status(400).json({ msg: `Profile not found.` });
+
+    res.json(profile.education);
+  } catch (err) {
+    res.status(500).send("Server Error");
+    // res.status(500).send("Server Error");
+  }
+});
+
+// @route   POST api/profile/education/:edu_id
+// @desc    Edit profile education
+// @access  Private
+router.post("/education/:edu_id", auth, async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).send({ err: errors.array() });
+  }
+
+  Profile.findOne({ user: req.user.id })
+    .then(profile => {
+      const educationIndex = profile.education
+        .map(item => item.id)
+        .indexOf(req.params.edu_id);
+
+      let educationToUpdate = profile.education[educationIndex];
+
+      (educationToUpdate.school = req.body.school),
+        (educationToUpdate.degree = req.body.degree),
+        (educationToUpdate.fieldofstudy = req.body.fieldofstudy),
+        (educationToUpdate.from = req.body.from),
+        (educationToUpdate.to = req.body.to),
+        (educationToUpdate.current = req.body.current),
+        (educationToUpdate.description = req.body.description);
+
+      profile.save().then(profile => res.json(profile));
+    })
+    .catch(err => res.status(404).json(err));
+});
 
 // @route   DELETE api/profile/education/:edu_id
 // @desc    delete education from profile
