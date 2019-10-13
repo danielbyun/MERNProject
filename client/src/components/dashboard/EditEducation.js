@@ -66,7 +66,14 @@ const EditEducation = ({
 
   return (
     <Fragment>
-      <section className="container">
+      <div>
+        <h1 className="large text-primary">Update Your Education</h1>
+        <p className="lead">
+          <i className="fas fa-user" />{" "}
+          <span style={{ font: "inherit" }}>
+            Let's get some information to make your profile stand out
+          </span>
+        </p>
         <form className="form" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
             <TextField
@@ -122,9 +129,9 @@ const EditEducation = ({
           </div>
           <div className="form-group">
             {/* date type */}
-            <input
-              // InputLabelProps={{ shrink: true }}
-              // label="to"
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              label="to"
               type="date"
               value={to}
               name="to"
@@ -134,7 +141,7 @@ const EditEducation = ({
           </div>
           <div className="form-group">
             {/* textarea type*/}
-            <textarea
+            <TextField
               aria-label="Description"
               rows={3}
               placeholder="Description"
@@ -144,12 +151,12 @@ const EditEducation = ({
               onChange={e => onChange(e)}
             />
           </div>
-          <input type="submit" className="btn btn-primary my-1" />
+          <input type="submit" className="btn btn-primary my-1 submit" />
           <Link to="/dashboard" className="btn btn-light my-1">
             Go Back
           </Link>
         </form>
-      </section>
+      </div>
     </Fragment>
   );
 };

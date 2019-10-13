@@ -72,9 +72,10 @@ const EditExperience = ({
       <div>
         <h1 className="large text-primary">Update Your Experience</h1>
         <p className="lead">
-          <i className="fas fa-user">
+          <i className="fas fa-user" />{" "}
+          <span style={{ font: "inherit" }}>
             Let's get some information to make your profile stand out
-          </i>
+          </span>
         </p>
         <form className="form" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
